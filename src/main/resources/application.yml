@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: bridge
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3326/bridge
+    username: admin
+    password: piD5yocruyob8JaZiSwo
+    hikari:
+      auto-commit: false
+      pool-name: bridge
+      minimum-idle: 5
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      connection-test-query: select 1
+      max-lifetime: 1800000   # default 30분 유지, 30분후 connection 폐기
+      idle-timeout: 30000     # 30초, minsize-default 10개 이후 반환되는 connection에 대해 30초 대기 후 반환
+      data-source-properties: # https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration 참고
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 61613
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
+    hibernate.ddl-auto: none
+    show-sql: true
+    open-in-view: false      # view layer 에서는 persistent context 를 사용하지 못하도록 설정
+  servlet:
+    multipart:
+      max-file-size: 10MB
+server:
+  port: 8080
+  error:
+    whitelabel.enabled: false
+  tomcat:
+    max-http-form-post-size: 10MB
+app:
+  agent:
+    message:
+      baseurl: ""
+      appKey: ""
+
+
